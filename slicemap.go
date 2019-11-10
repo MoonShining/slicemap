@@ -53,3 +53,26 @@ func (sm *SliceMap) Get(k []byte) []byte {
 	}
 	return nil
 }
+
+func (sm *SliceMap) MarshalJSON() []byte {
+	var buffer bytes.Buffer
+
+	buffer.WriteString("{")
+
+	for i, kv := range *sm {
+		if len(kv.Key) == 0 {
+			continue
+		}
+		buffer.WriteString(`"`)
+		buffer.Write(kv.Key)
+		buffer.WriteString(`":"`)
+		buffer.Write(kv.Value)
+		buffer.WriteString(`"`)
+		if i != len(*sm)-1 {
+			buffer.WriteString(`,`)
+		}
+	}
+
+	buffer.WriteString("}")
+	return buffer.Bytes()
+}

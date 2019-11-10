@@ -33,7 +33,11 @@ func TestAddGet(t *testing.T) {
 		t.Fatal("borrow fail")
 	}
 	m.Add(key1, value1)
+	m.Add(key2, value2)
 	if !bytes.Equal(value1, bar) {
 		t.Fatal("get foo again error")
 	}
+
+	data := m.MarshalJSON()
+	t.Log(string(data))
 }
